@@ -90,8 +90,6 @@ function(add_gba_executables binaryTarget gameTitle gameCode makerCode version)
         COMMAND
             ${CMAKE_COMMAND} -E copy "${binFile}" "${elfFile}"
         VERBATIM
-        DEPENDS
-            ${binaryTarget}
     )
     set(gbaFile ${binBasePath}.gba)
     add_custom_command(TARGET ${binaryTarget} POST_BUILD
@@ -100,8 +98,6 @@ function(add_gba_executables binaryTarget gameTitle gameCode makerCode version)
         COMMAND
             ${GBAFIX} "${gbaFile}" -p -t${gameTitle} -c${gameCode} -m${makerCode} -r${version}
         VERBATIM
-        DEPENDS
-            ${binaryTarget}
     )
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${elfFile})
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${gbaFile})
@@ -138,8 +134,6 @@ function(add_sections_file binaryTarget)
         COMMAND
             cmake -P "${convert_nm_sysv_to_md}" "${analysisFile}" "${analysisFile}"
         VERBATIM
-        DEPENDS
-            ${binaryTarget}
     )
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${analysisFile})
 endfunction()
